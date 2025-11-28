@@ -1,0 +1,33 @@
+# Deny access to all files in uploads directory
+<Files "*">
+    Order Deny,Allow
+    Deny from all
+</Files>
+
+# Allow only specific file types for viewing (if needed)
+<FilesMatch "\.(jpg|jpeg|png|gif)$">
+    Order Allow,Deny
+    Allow from all
+</FilesMatch>
+
+# Prevent execution of any scripts
+<FilesMatch "\.(php|php3|php4|php5|phtml|pl|py|jsp|asp|sh|cgi)$">
+    Order Deny,Allow
+    Deny from all
+</FilesMatch>
+
+# Disable directory browsing
+Options -Indexes
+
+# Prevent access to .htaccess file
+<Files ".htaccess">
+    Order Deny,Allow
+    Deny from all
+</Files>
+
+# Set security headers
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options nosniff
+    Header always set X-Frame-Options DENY
+    Header always set X-XSS-Protection "1; mode=block"
+</IfModule>
